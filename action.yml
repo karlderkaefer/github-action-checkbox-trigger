@@ -1,11 +1,21 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: Checkbox Trigger
+description: Detect and update checkboxes in PR description
+author: karlderkaefer
 inputs:
-  milliseconds: # change this
+  github-token:
+    description: GitHub token
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  action:
+    description: Action to perform (detect, check, uncheck)
+    required: true
+  checkbox:
+    description: Comma separated list of checkboxes to check or uncheck
+    required: false
+outputs:
+  checked:
+    description: Checked checkboxes
+  unchecked:
+    description: Unchecked checkboxes
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: node16
+  main: dist/index.js
