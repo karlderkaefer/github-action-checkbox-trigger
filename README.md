@@ -4,6 +4,8 @@
 
 # Checkbox Trigger Action
 
+https://github.com/marketplace/actions/checkbox-trigger
+
 This action will check or uncheck a checkbox in pull request description. Also it can be used to run tests on conditionals. This can be used for example to run expensive integration tests only when a checkbox is checked.
 
 ## Usage
