@@ -3,7 +3,7 @@ import * as github from '@actions/github'
 import {detectCheckboxes} from './detect'
 import {modifyCheckboxes} from './check'
 import {CheckboxActionType} from './model'
-import {updatePrDescription} from './github'
+import {updatePrDescription, getLatestPullRequestDescription} from './github'
 
 async function run(): Promise<void> {
   try {
@@ -19,7 +19,7 @@ async function run(): Promise<void> {
       return
     }
 
-    const prDescription: string = pullRequest.body
+    const prDescription: string = await getLatestPullRequestDescription()
 
     switch (action) {
       case 'detect':
