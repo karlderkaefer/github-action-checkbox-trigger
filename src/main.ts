@@ -1,8 +1,8 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {detectCheckboxes} from './detect'
-import {checkCheckbox} from './check'
-import {uncheckCheckbox} from './uncheck'
+import {modifyCheckboxes} from './check'
+import {CheckboxActionType} from './model'
 import {updatePrDescription} from './github'
 
 async function run(): Promise<void> {
@@ -10,7 +10,6 @@ async function run(): Promise<void> {
     const token: string = core.getInput('github-token', {required: true})
     const action: string = core.getInput('action')
     const checkbox: string = core.getInput('checkbox')
-
     const octokit = github.getOctokit(token)
     const context = github.context
     const pullRequest = context.payload.pull_request
@@ -27,17 +26,19 @@ async function run(): Promise<void> {
         detectCheckboxes(prDescription)
         break
       case 'check': {
-        const checkedDescription = checkCheckbox(
+        const checkedDescription = modifyCheckboxes(
           prDescription,
-          checkbox.split(',')
+          checkbox.split(','),
+          CheckboxActionType.Check
         )
         await updatePrDescription(octokit, context, checkedDescription)
         break
       }
       case 'uncheck': {
-        const uncheckedDescription = uncheckCheckbox(
+        const uncheckedDescription = modifyCheckboxes(
           prDescription,
-          checkbox.split(',')
+          checkbox.split(','),
+          CheckboxActionType.Uncheck
         )
         await updatePrDescription(octokit, context, uncheckedDescription)
         break
