@@ -1,35 +1,23 @@
-import * as core from '@actions/core'
-import {CheckboxActionType} from './model'
+export enum CheckboxAction {
+  Check = 'check',
+  Uncheck = 'uncheck'
+}
 
 export function modifyCheckboxes(
   prDescription: string,
   checkboxes: string[],
-  action: CheckboxActionType
+  action: CheckboxAction
 ): string {
-  let newDescription = prDescription
-  const regex = /^- \[([xX ]*)\]\s*(.*)$/gm
-  let match: RegExpExecArray | null
-  while ((match = regex.exec(newDescription)) !== null) {
-    const checkboxText = match[2].trim()
-    if (checkboxes.includes(checkboxText)) {
-      const checkboxState = match[1].toLowerCase()
-      if (
-        (action === CheckboxActionType.Check && checkboxState !== 'x') ||
-        (action === CheckboxActionType.Uncheck && checkboxState === 'x')
-      ) {
-        newDescription = newDescription.replace(
-          new RegExp(`^- \\[${match[1]}\\]\\s*${checkboxText}`, 'm'),
-          `- [${
-            action === CheckboxActionType.Check ? 'x' : ' '
-          }] ${checkboxText}`
-        )
-        core.info(
-          `${
-            action === CheckboxActionType.Check ? 'Checked' : 'Unchecked'
-          } ${checkboxText}`
-        )
-      }
+  const regex = /^- \[([xX ]*)\]\s*(.*)$/
+  const lines = prDescription.split('\n')
+  const newLines = lines.map(line => {
+    const match = regex.exec(line)
+    if (match !== null && checkboxes.includes(match[2].trim())) {
+      const newCheckboxState = action === CheckboxAction.Check ? 'x' : ' '
+      const newLine = `- [${newCheckboxState}] ${match[2]}`
+      return newLine
     }
-  }
-  return newDescription
+    return line
+  })
+  return newLines.join('\n')
 }

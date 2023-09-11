@@ -1,8 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {detectCheckboxes} from './detect'
-import {modifyCheckboxes} from './check'
-import {CheckboxActionType} from './model'
+import {modifyCheckboxes, CheckboxAction} from './check'
 import {updatePrDescription, getLatestPullRequestDescription} from './github'
 
 async function run(): Promise<void> {
@@ -29,7 +28,7 @@ async function run(): Promise<void> {
         const checkedDescription = modifyCheckboxes(
           prDescription,
           checkbox.split(','),
-          CheckboxActionType.Check
+          CheckboxAction.Check
         )
         await updatePrDescription(octokit, context, checkedDescription)
         break
@@ -38,7 +37,7 @@ async function run(): Promise<void> {
         const uncheckedDescription = modifyCheckboxes(
           prDescription,
           checkbox.split(','),
-          CheckboxActionType.Uncheck
+          CheckboxAction.Uncheck
         )
         await updatePrDescription(octokit, context, uncheckedDescription)
         break

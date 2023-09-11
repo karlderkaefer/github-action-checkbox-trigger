@@ -1,5 +1,4 @@
-import { modifyCheckboxes} from '../src/check'
-import { CheckboxActionType } from '../src/model'
+import { modifyCheckboxes, CheckboxAction} from '../src/check'
 
 describe('modifyCheckboxes', () => {
   it('checks a single unchecked checkbox', () => {
@@ -8,7 +7,7 @@ describe('modifyCheckboxes', () => {
 - [ ] Option 2
     `
 
-    const result = modifyCheckboxes(description, ['Option 1'], CheckboxActionType.Check)
+    const result = modifyCheckboxes(description, ['Option 1'], CheckboxAction.Check)
 
     expect(result).toContain('- [x] Option 1')
     expect(result).toContain('- [ ] Option 2')
@@ -21,7 +20,7 @@ describe('modifyCheckboxes', () => {
 - [ ] Option 3
     `
 
-    const result = modifyCheckboxes(description, ['Option 1', 'Option 3'], CheckboxActionType.Check)
+    const result = modifyCheckboxes(description, ['Option 1', 'Option 3'], CheckboxAction.Check)
 
     expect(result).toContain('- [x] Option 1')
     expect(result).toContain('- [ ] Option 2')
@@ -34,7 +33,7 @@ describe('modifyCheckboxes', () => {
 - [ ] Option 2
     `
 
-    const result = modifyCheckboxes(description, [], CheckboxActionType.Check)
+    const result = modifyCheckboxes(description, [], CheckboxAction.Check)
 
     expect(result).toEqual(description)
   })
@@ -45,7 +44,7 @@ describe('modifyCheckboxes', () => {
 - [ ] Option 2
     `
 
-    const result = modifyCheckboxes(description, ['Option 1'], CheckboxActionType.Check)
+    const result = modifyCheckboxes(description, ['Option 1'], CheckboxAction.Check)
 
     expect(result).toEqual(description)
   })
@@ -56,7 +55,7 @@ describe('modifyCheckboxes', () => {
 - [ ] Option 2
     `
 
-    const result = modifyCheckboxes(description, ['Option 3'], CheckboxActionType.Check)
+    const result = modifyCheckboxes(description, ['Option 3'], CheckboxAction.Check)
 
     expect(result).toEqual(description)
   })
@@ -67,7 +66,7 @@ describe('modifyCheckboxes', () => {
   - [ ] Option 2
     `
   
-    const result = modifyCheckboxes(description, ['Option 1'], CheckboxActionType.Check)
+    const result = modifyCheckboxes(description, ['Option 1'], CheckboxAction.Check)
   
     expect(result).toContain('- [x] Option 1   ')
     expect(result).toContain('- [ ] Option 2')
@@ -79,8 +78,8 @@ describe('modifyCheckboxes', () => {
 - [] Option 2
     `
 
-    const result = modifyCheckboxes(description, ['Option 2'], CheckboxActionType.Check)
-
+    const result = modifyCheckboxes(description, ['Option 2'], CheckboxAction.Check)
+  
     expect(result).toContain('- [ ] Option 1')
     expect(result).toContain('- [x] Option 2')
   })
@@ -91,7 +90,7 @@ describe('modifyCheckboxes', () => {
 - [ ] Option 2
     `
 
-    const result = modifyCheckboxes(description, ['Option 1'], CheckboxActionType.Check)
+    const result = modifyCheckboxes(description, ['Option 1'], CheckboxAction.Check)
 
     expect(result).toContain('- [x] Option 1')
     expect(result).toContain('- [ ] Option 2')
@@ -103,7 +102,7 @@ describe('modifyCheckboxes', () => {
 - [ ] Option 2
     `
 
-    const result = modifyCheckboxes(description, ['Option 1'], CheckboxActionType.Check)
+    const result = modifyCheckboxes(description, ['Option 1'], CheckboxAction.Check)
 
     expect(result).toContain('- [x] Option 1')
     expect(result).toContain('- [ ] Option 2')
