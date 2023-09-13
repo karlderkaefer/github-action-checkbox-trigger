@@ -18,7 +18,11 @@ async function run(): Promise<void> {
     }
 
     const prDescription: string = await getLatestPullRequestDescription(octokit)
-    core.debug(`PR description: ${prDescription}`)
+    if (!prDescription || prDescription === '') {
+      core.warning('No pull request description found. Skipping.')
+      return
+    }
+    core.info(`collected PR description: ${prDescription}`)
 
     switch (action) {
       case 'detect':
