@@ -12,13 +12,13 @@ async function run(): Promise<void> {
     const octokit = github.getOctokit(token)
     const context = github.context
     const pullRequest = context.payload.pull_request
-
     if (!pullRequest || !pullRequest.body) {
       core.warning('No pull request found. Skipping.')
       return
     }
 
-    const prDescription: string = await getLatestPullRequestDescription()
+    const prDescription: string = await getLatestPullRequestDescription(octokit)
+    core.debug(`PR description: ${prDescription}`)
 
     switch (action) {
       case 'detect':
@@ -30,7 +30,7 @@ async function run(): Promise<void> {
           checkbox.split(','),
           CheckboxAction.Check
         )
-        await updatePrDescription(octokit, context, checkedDescription)
+        await updatePrDescription(octokit, checkedDescription)
         break
       }
       case 'uncheck': {
@@ -39,7 +39,7 @@ async function run(): Promise<void> {
           checkbox.split(','),
           CheckboxAction.Uncheck
         )
-        await updatePrDescription(octokit, context, uncheckedDescription)
+        await updatePrDescription(octokit, uncheckedDescription)
         break
       }
       default:
