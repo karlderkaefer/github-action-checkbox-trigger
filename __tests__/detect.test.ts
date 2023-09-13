@@ -96,4 +96,26 @@ This is a description with no checkboxes.
     expect(result.checked).toEqual([])
     expect(result.unchecked).toEqual([])
   })
+
+  it('sutom', () => {
+    const description = `
+## Description
+
+Please include a summary of the changes and the related issue. Please also include relevant motivation and context. List any dependencies that are required for this change.
+
+Fixes # (issue)
+
+## Testing
+
+To re-run the tests, click the checkbox Trigger the integration test below. Once the test is successful, the checkbox Integration test succeeded will be checked.
+
+- [x] Trigger the integration test
+- [ ] Integration test succeeded
+`
+
+    const result = detectCheckboxes(description)
+
+    expect(result.checked).toEqual(["Trigger the integration test"])
+    expect(result.unchecked).toEqual(["Integration test succeeded"])
+  })
 })

@@ -22,7 +22,7 @@ async function run(): Promise<void> {
       core.warning('No pull request description found. Skipping.')
       return
     }
-    core.info(`collected PR description: ${prDescription}`)
+    core.debug(`collected PR description: ${prDescription}`)
 
     switch (action) {
       case 'detect':
