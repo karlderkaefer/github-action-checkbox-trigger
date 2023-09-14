@@ -9,10 +9,9 @@ export function detectCheckboxes(prDescription: string): {
   const regex = /^-\s*\[([xX ]*)\]\s*(.*)$/gm
   let match
   while ((match = regex.exec(prDescription)) !== null) {
-    core.info(`Got match: ${match}`)
     const checkbox = match[1].trim()
     const text = match[2].trim()
-    core.info(`Found checkbox: ${checkbox} and text: ${text}`)
+    core.debug(`Found checkbox: ${checkbox} and text: ${text}`)
     if (checkbox === 'x' || checkbox === 'X') {
       checked.push(text)
     } else {

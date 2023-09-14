@@ -33,7 +33,7 @@ export function modifyCheckboxes(
   return prDescription.replace(regex, (match, state, checkboxText) => {
     if (checkboxes.includes(checkboxText.trim())) {
       const newCheckboxState = getCheckboxState(action)
-      core.info(`${action} checkbox: ${checkboxText}`)
+      core.debug(`${action} checkbox: ${checkboxText}`)
       return `- [${newCheckboxState}] ${checkboxText}`
     }
     return match
