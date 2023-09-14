@@ -7,13 +7,14 @@ export function detectCheckboxes(prDescription: string): {
   const checked: string[] = []
   const unchecked: string[] = []
   const lines = prDescription.split('\n')
-  const regex = /^- \[([xX ]*)\] (.*)$/
+  const regex = /^-\s*\[([xX ]*)\]\s*(.*)$/
   for (const line of lines) {
     const match = line.match(regex)
-    core.info(`Checking line: ${line}`)
+    core.info(`Checking line: ${line} Got match: ${match}`)
     if (match) {
       const checkbox = match[1].trim()
       const text = match[2].trim()
+      core.info(`Found checkbox: ${checkbox} and text: ${text}`)
       if (checkbox === 'x' || checkbox === 'X') {
         checked.push(text)
         core.info(`Found checked box: ${line}`)
