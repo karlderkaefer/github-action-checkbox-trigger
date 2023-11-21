@@ -6,16 +6,15 @@ export function detectCheckboxes(prDescription: string): {
 } {
   const checked: string[] = []
   const unchecked: string[] = []
-  const regex = /^-\s*\[([xX ]*)\]\s*(.*)$/gm
-  let match
-  while ((match = regex.exec(prDescription)) !== null) {
-    const checkbox = match[1].trim()
-    const text = match[2].trim()
-    core.debug(`Found checkbox: ${checkbox} and text: ${text}`)
-    if (checkbox === 'x' || checkbox === 'X') {
-      checked.push(text)
-    } else {
-      unchecked.push(text)
+  const lines = prDescription.split('\n')
+  for (const line of lines) {
+    if (line.startsWith('- [x]')) {
+      checked.push(line.substring(6).trim())
+      core.info(`Found checked box: ${line}`)
+    }
+    if (line.startsWith('- [ ]')) {
+      unchecked.push(line.substring(6).trim())
+      core.info(`Found unchecked box: ${line}`)
     }
   }
   core.setOutput('checked', checked.join(','))
