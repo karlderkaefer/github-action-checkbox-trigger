@@ -2,7 +2,10 @@
   <a href="https://github.com/karlderkaefer/github-action-checkbox-trigger/actions"><img alt="typescript-action status" src="https://github.com/karlderkaefer/github-action-checkbox-trigger/workflows/build-test/badge.svg"></a>
 </p>
 
+
 # Checkbox Trigger Action
+
+## Deprectated: I could not get this action to behave consistently with different approaches, so I stopped work on this
 
 https://github.com/marketplace/actions/checkbox-trigger
 
